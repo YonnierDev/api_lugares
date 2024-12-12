@@ -23,8 +23,9 @@ mongoose
   })
   .then(() => {
     console.log("Conectado a la base de datos");
-    app.listen(PORT, () =>
-      console.log(`Servidor corriendo en http://localhost:${PORT}`)
+    // Hacer que el servidor escuche en todas las interfaces
+    app.listen(PORT, "0.0.0.0", () =>
+      console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`)
     );
   })
   .catch((error) =>

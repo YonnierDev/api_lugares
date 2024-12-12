@@ -1,3 +1,4 @@
+// routes/lugares.js
 const express = require("express");
 const Lugar = require("../models/Lugar");
 const router = express.Router();
@@ -5,32 +6,7 @@ const router = express.Router();
 // Obtener todos los lugares
 router.get("/", async (req, res) => {
   try {
-    // Datos de ejemplo si la base de datos está vacía o si quieres probar
-    const lugaresEjemplo = [
-      {
-        _id: "1",
-        nombre: "Prints",
-        ubicacion:
-          "Estamos ubicados en la vía al bosque al frente del conjunto Asturias",
-        descripcion: "Comidas Rapidas",
-      },
-      {
-        _id: "2",
-        nombre: "Sandunga",
-        ubicacion: "Bellavista",
-        descripcion: "Discoteca",
-      },
-      {
-        _id: "3",
-        nombre: "Rana Club",
-        ubicacion: "Glorieta Toscana",
-        descripcion: "Bar - Bola y rana",
-      },
-    ];
-
-    // Aquí simula la obtención de lugares desde la base de datos
-    const lugares = lugaresEjemplo; // En un entorno real usarías Lugar.find()
-
+    const lugares = await Lugar.find(); // Obtener lugares de la base de datos
     res.json(lugares);
   } catch (error) {
     console.error("Error al obtener lugares:", error);
@@ -39,15 +15,14 @@ router.get("/", async (req, res) => {
 });
 
 // Crear un lugar
-// Crear un lugar
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body); // Esto te permitirá ver los datos que se están enviando
+    console.log(req.body); // Ver los datos que se están enviando
     const nuevoLugar = new Lugar(req.body);
     const lugarGuardado = await nuevoLugar.save();
     res.status(201).json(lugarGuardado);
   } catch (error) {
-    console.error(error); // Imprime cualquier error en el servidor
+    console.error(error); // Imprime cualquier error
     res.status(400).json({ error: "Error al crear lugar" });
   }
 });
